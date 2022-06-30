@@ -18,20 +18,33 @@
           <h1 class="text-weight-bold">PCA Club</h1>
           </div>-->
           <div class="block bg-white shadow-1 q-pa-md">
-            <h2 class="text-center">VIRTUAL PROPERTY MANAGEMENT</h2>
-            <p class="text-center">
-              Our portal allows you to manage your property right from the
-              comfort of your home.
-            </p>
+            <h2 class="text-center">Dashboard</h2>
+
+            <q-table
+              title="Current Plan Info: "
+              dense
+              :rows="rows"
+              :columns="columns"
+              row-key="name"
+            />
+            <q-table
+              title="Your Benefits: "
+              class="tableTwo"
+              dense
+              :rows="rowsTwo"
+              :columns="columnsTwo"
+              row-key="nameTwo"
+            />
           </div>
           <div class="bottom text-center absolute-bottom">
             <p class="bg-white shadow-1">
-              <q-btn-toggle
-                class="text-teal"
+           <q-btn
+           clickable
+            v-ripple
+             class="text-teal"
                 flat
-                v-model="slide"
-                :options="[{ label: 'Login', value: '3' }]"
-              />
+            to="pcadashboard"
+            label="Main menu"/>
             </p>
           </div>
           <div class="bottom-under absolute-bottom">
@@ -52,17 +65,21 @@
           <h1 class="text-weight-bold">PCA Club</h1>
           </div>-->
           <div class="block bg-white shadow-1 q-pa-md">
-            <p class="text-center">
-              We also provide 24/7 emergency maintenance option for all of your
-              tenant requests.
-            </p>
+            <h2 class="text-center">Pending Claim's</h2>
+           <div class="info-box">
+            <h5>Pending Claim's:</h5>
+            <p class="info bg-teal text-white q-pl-md">No pending claims are Found!</p>
+           </div>
           </div>
           <div class="bottom text-center absolute-bottom">
             <p class="bg-white shadow-1">
-              Don't have a account?
-              <a href="https://pcaclub.com/home-community/"
-                ><span class="text-teal">Register now.</span></a
-              >
+               <q-btn
+           clickable
+            v-ripple
+             class="text-teal"
+                flat
+            to="pcadashboard"
+            label="Main menu"/>
             </p>
           </div>
           <div class="bottom-under absolute-bottom">
@@ -83,39 +100,22 @@
           <h1 class="text-weight-bold">PCA Club</h1>
           </div>-->
           <div class="block bg-white shadow-1 q-pa-md">
-            <q-form @submit="onSubmit" @reset="onReset" class="q-gutter-md">
-              <q-input
-                rounded
-                outlined
-                v-model="name"
-                label="Enter your email address *"
-                lazy-rules
-                :rules="[
-                  (val) => (val && val.length > 0) || 'Please type something',
-                ]"
-              />
+             <h2 class="text-center">Complete Claim's</h2>
+           <div class="info-box">
+            <h5>Complete Claim's:</h5>
+            <p class="info bg-teal text-white q-pl-md">No completed claims are Found!</p>
+           </div>
 
-              <div>
-                <q-btn
-                  outline
-                  unelevated
-                  rounded
-                  label="Login"
-                  type="submit"
-                  color="gray"
-                  class="text-black"
-                  style="width: 100%; padding-top: 1em; padding-bottom: 1em"
-                  to="/pcadashboard"
-                />
-              </div>
-            </q-form>
           </div>
           <div class="bottom text-center absolute-bottom">
             <p class="bg-white shadow-1">
-              Don't have a account?
-              <a href="https://pcaclub.com/home-community/"
-                ><span class="text-teal">Register now.</span></a
-              >
+              <q-btn
+           clickable
+            v-ripple
+             class="text-teal"
+                flat
+            to="pcadashboard"
+            label="Main menu"/>
             </p>
           </div>
           <div class="bottom-under absolute-bottom">
@@ -137,13 +137,99 @@
 </template>
 
 <script>
+import { defineComponent } from "vue";
 import { ref } from "vue";
+
+/* Table */
+const columns = [
+  {
+    name: "name",
+    required: true,
+    label: "",
+    align: "left",
+    field: (row) => row.name,
+    format: (val) => `${val}`,
+    sortable: true,
+  },
+  {
+    name: "calories",
+    align: "center",
+    label: "",
+    field: "calories",
+    sortable: true,
+  },
+];
+
+const rows = [
+  {
+    name: "Plan: ",
+    calories: "Landlord",
+  },
+  {
+    name: "Plan Expiration: ",
+    calories: "01/17/2021",
+  },
+  {
+    name: "Membership Number: ",
+    calories: "PCAMN55",
+  },
+];
+/* TableTwo */
+const columnsTwo = [
+  {
+    name: "nameTwo",
+    required: true,
+    label: "",
+    align: "left",
+    field: (row) => row.name,
+    format: (val) => `${val}`,
+    sortable: true,
+  },
+  {
+    name: "caloriesTwo",
+    align: "center",
+    label: "",
+    field: "caloriesTwo",
+    sortable: true,
+  },
+];
+
+const rowsTwo = [
+  {
+    name: "Emergency Accommodations ",
+    caloriesTwo: 3,
+  },
+  {
+    name: "Emergency Maintenance ",
+    caloriesTwo: 1,
+  },
+  {
+    name: "Rental Payment ",
+    caloriesTwo: 0,
+  },
+  {
+    name: "PCA Liaison ",
+    caloriesTwo: 0,
+  },
+  {
+    name: "24/7 PCA Concierge ",
+    caloriesTwo: 0,
+  },
+  {
+    name: "Announcements Board ",
+    caloriesTwo: 0,
+  },
+];
 
 export default {
   setup() {
     return {
       slide: ref(1),
       fullscreen: ref(true),
+      columns,
+      rows,
+      columnsTwo,
+      rowsTwo,
     };
   },
 };
@@ -153,10 +239,13 @@ export default {
 @import url("https://fonts.googleapis.com/css2?family=Spline+Sans+Mono:wght@300;400;500;600;700&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Fascinate&display=swap");
 
-/*.slide1-title :is(h1,h2){
-  font-family: 'Spline Sans Mono', monospace;
+.q-table__bottom.row.items-center.justify-end {
+  display: none;
+}
 
-}*/
+.slide1-title :is(h1, h2) {
+  font-family: "Spline Sans Mono", monospace;
+}
 .slide1-title h1 {
   // font-family: 'Fascinate', cursive;
 }
@@ -196,9 +285,9 @@ export default {
   background-position: bottom;
 }
 
-/*.q-carousel__control.q-carousel__navigation.no-wrap.absolute.flex.q-carousel__navigation--buttons.q-carousel__navigation--bottom {
-	color: gray;
-}*/
+.q-carousel__control.q-carousel__navigation.no-wrap.absolute.flex.q-carousel__navigation--buttons.q-carousel__navigation--bottom {
+  color: gray;
+}
 .q-icon.notranslate.material-icons {
   color: #009688;
 }
